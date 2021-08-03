@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">KmmWeather</string>
+    <string name="label_city_text">Cidade: </string>
+    <string name="brn_update_weather_label">Atualizar Previsão do tempo</string>
+</resources>
