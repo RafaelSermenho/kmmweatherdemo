@@ -1,5 +1,6 @@
 package dev.rafaelsermenho.kmmweatherdemo
 
+import Response
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
@@ -8,9 +9,13 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import dev.rafaelsermenho.kmmweatherdemo.databinding.ActivityMainBinding
+import dev.rafaelsermenho.kmmweathershared.api.OpenWeatherAPI
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 class MainActivity : AppCompatActivity(), LocationListener {
@@ -27,9 +32,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
         setContentView(view)
         setupLocationManager()
         setupGeoCoder()
-//        binding.btnUpdateWeather.setOnContextClickListener {
-//            TODO: Call shared module
-//        }
     }
 
     override fun onResume() {
