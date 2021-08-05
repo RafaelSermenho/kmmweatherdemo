@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "KmmWeatherDemo"
 include ':app'
+include ':kmmweathershared'

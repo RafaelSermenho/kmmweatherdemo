@@ -1,6 +1,6 @@
 package dev.rafaelsermenho.kmmweatherdemo
 
-import Response
+import dev.rafaelsermenho.kmmweathershared.entity.Response
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private val minTimeInMsToUpdate: Long = 1000
     private val minDistanceInMToUpdate: Float = 1000f
     private val permissionRequestCode = 1024
+    private val mainScope = MainScope()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -43,6 +44,23 @@ class MainActivity : AppCompatActivity(), LocationListener {
         val address =
             geoCoder.getFromLocation(location.latitude, location.longitude, 1)
         binding.cityDescription.text = address[0].subAdminArea
+        mainScope.launch {
+            kotlin.runCatching {
+                OpenWeatherAPI().getWeatherForCity(binding.cityDescription.text as String)
+            }.onSuccess { updateWeatherData(it) }.onFailure {
+                it.message?.let { error ->
+                    Log.d(
+                        "myTagErro",
+                        error
+                    )
+                }
+            }
+        }
+    }
+
+    private fun updateWeatherData(response: Response) {
+        binding.wheatherData.text =
+            "Hoje vamos ter ${response.weather[0].description} e uma temperatura de ${response.main.temp} graus!"
     }
 
     private fun setupLocationManager() {
