@@ -9,8 +9,8 @@ import kotlinx.serialization.json.Json
 
 class OpenWeatherAPI {
     companion object {
-        private const val OPEN_WEATHER_ENDPOINT = "\n" +
-                "https://api.openweathermap.org/data/2.5/weather?appid=YOUR_API_KEY&units=metric&lang=pt_br"
+        private var OPEN_WEATHER_ENDPOINT = "\n" +
+                "https://api.openweathermap.org/data/2.5/weather?appid=YOUR_API_KEY&units=metric&lang=${Language().language}"
     }
 
     private val httpClient = HttpClient {
